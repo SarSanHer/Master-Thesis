@@ -10,8 +10,8 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      
      sudo apt-get install perl
 
-## Create a frequency file  
-     ./plink --bfile <filtered_control_files> --make-bed --out <frq_control>
+## Create a frequency files
+     ./plink --freq --bfile <filtered_control_files> --out <frq_control>
      ./plink --freq --bfile <filtered_case_files> --allow-no-sex --out <frq_cases>
 
 ## Execute script
