@@ -10,7 +10,6 @@ This file contains the commands used for the quality control of the samples perf
  
  ### Prepare files for PLINK (--make-bed)
  In order to do this you have to either add plink to the PATH or work from the directory where PLINK is located. The input are the .bim, .bed and .fam files, so in the command we use the name (that is the same for the three files) without the extension. The same applies for the output.
- 
       ./plink --bfile <control_files_name> --make-bed --out <new_control_name>
       ./plink --bfile <case_files_name> --make-bed --out <new_case_name>
       
