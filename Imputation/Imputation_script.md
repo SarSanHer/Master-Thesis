@@ -20,6 +20,8 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      ./plink --freq --bfile <filtered_case_files> --allow-no-sex --out <frq_cases>
 
  ## Execute script
+ The perl script creates the Run-plink.sh that requires that all files used for the perl command are in the same directory, and plink must also be in that same directory unless it has already been added to the PATH.
+ 
      perl HRC-1000G-check-bim.pl -b <filtered_control_files.bim> -f <frq_control> -r HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h
      sh Run-plink.sh
      
