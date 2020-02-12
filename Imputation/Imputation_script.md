@@ -18,7 +18,11 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      ./plink --freq --bfile <filtered_case_files> --allow-no-sex --out <frq_cases>
 
  ## Execute script
+     perl HRC-1000G-check-bim.pl -b <filtered_control_files.bim> -f <frq_control> -r HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h
+     sh Run-plink.sh
+     
      perl HRC-1000G-check-bim.pl -b <filtered_case_files.bim> -f <frq_cases> -r HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h
+     sh Run-plink.sh
 
  ## Create VCF with vcfCooker
      vcfCooker --in-bfile <filtered_control_files.bim> --ref <reference.fasta>  --out <control_output-vcf> --write-vcf
