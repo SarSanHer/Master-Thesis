@@ -3,7 +3,8 @@
 This script reports the workflow and commands used for the imputation of SNPs performed using the Michigan Imputation Server. MMany of the commands here displayed come from the Michigan Imputation Server user manual.
 
  ## Get all required data and tools  
- In your computer you must also have installed plink, perl (and the module Term::ReadLine::Gnu, [help] (https://coderwall.com/p/kk0hqw/perl-install-term-readline-gnu-on-osx)), deeptools and vcfCooker.
+ In your computer you must also have installed plink, perl with module Term::ReadLine::Gnu, [help] (https://coderwall.com/p/kk0hqw/perl-install-term-readline-gnu-on-osx), deeptools and vcfCooker.  
+ 
      # Download reference panel
      wget http://www.well.ox.ac.uk/~wrayner/tools/HRC-1000G-check-bim-v4.2.7.zip
      unzip HRC-1000G-check-bim-v4.2.7.zip
