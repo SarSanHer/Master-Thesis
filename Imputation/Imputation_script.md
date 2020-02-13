@@ -28,7 +28,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      perl HRC-1000G-check-bim.pl -b <filtered_case_files.bim> -f <frq_cases> -r HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h
      sh Run-plink.sh
 
- ## Create VCF with vcfCooker
+ ## Create VCF file for each chromosome and sort it
      vcfCooker --in-bfile <filtered_control_files.bim> --ref <reference.fasta>  --out <control_output-vcf> --write-vcf
      bgzip <control_output-vcf>
      
