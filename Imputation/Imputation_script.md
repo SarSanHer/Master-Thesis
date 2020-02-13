@@ -29,11 +29,11 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      sh Run-plink.sh
 
  ## Create VCF file for each chromosome and sort it
-     vcfCooker --in-bfile <filtered_control_files.bim> --ref <reference.fasta>  --out <control_output-vcf> --write-vcf
-     bgzip <control_output-vcf>
+     vcfCooker --in-bfile <chrX_control.bim> --ref <reference.fasta>  --out <chrX_control-vcf> --write-vcf
+     bgzip <chrX_control-vcf>
      
-     vcfCooker --in-bfile <filtered_case_files.bim> --ref <reference.fasta>  --out <case_output-vcf> --write-vcf
-     bgzip <case_output-vcf>
+     vcfCooker --in-bfile <chrX_case.bim> --ref <reference.fasta>  --out <chrX_case-vcf> --write-vcf
+     bgzip <chrX_case-vcf>
 
  ## Chech VCF files
      checkVCF.py -r human_g1k_v37.fasta -o out mystudy_chr1.vcf.gz
