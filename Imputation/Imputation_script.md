@@ -26,7 +26,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      sh Run-plink.sh
      
      perl HRC-1000G-check-bim.pl -b <filtered_case_files.bim> -f <frq_cases> -r HRC.r1-1.GRCh37.wgs.mac5.sites.tab -h
-     sh Run-plink.sh
+     sh Run-plink.sh # IMPORTANT: edit this file to add --allow-no-sex to the plink commands, otherwise phenotypes of missing-sex samples are ignored
 
  ## Create VCF file for each chromosome and sort it
      vcfCooker --in-bfile <chrX_control.bim> --ref <reference.fasta>  --out <chrX_control-vcf> --write-vcf
