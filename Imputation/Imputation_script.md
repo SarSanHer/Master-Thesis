@@ -16,6 +16,8 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      # Tools
      wget https://github.com/seppinho/scripts/blob/master/imputation/bin/vcfCooker
      wget http://data.broadinstitute.org/alkesgroup/Eagle/downloads/ 
+     
+     # Download python script from https://github.com/zhanxw/checkVCF/blob/master/checkVCF.py
 
 
  ## Create a frequency files
@@ -50,6 +52,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      done
 
  ## Chech VCF files
+     samtools faidx hs37d5.fa # create index for the reference genome
      checkVCF.py -r human_g1k_v37.fasta -o out mystudy_chr1.vcf.gz
 
  ## Phasing with Eagle
