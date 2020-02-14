@@ -5,12 +5,15 @@ This script reports the workflow and commands used for the imputation of SNPs pe
  ## Get all required data and tools  
  In your computer you must also have installed plink and perl with the module [Term::ReadLine::Gnu](https://coderwall.com/p/kk0hqw/perl-install-term-readline-gnu-on-osx).  
  
-     # Download reference panel
+     # Perl script and reference panel
      wget http://www.well.ox.ac.uk/~wrayner/tools/HRC-1000G-check-bim-v4.2.7.zip
      unzip HRC-1000G-check-bim-v4.2.7.zip
      wget ftp://ngs.sanger.ac.uk/production/hrc/HRC.r1-1/HRC.r1-1.GRCh37.wgs.mac5.sites.tab.gz
      
-     # Download tools
+     # Reference genome
+     wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz
+     
+     # Tools
      wget https://github.com/seppinho/scripts/blob/master/imputation/bin/vcfCooker
      wget http://data.broadinstitute.org/alkesgroup/Eagle/downloads/ 
 
