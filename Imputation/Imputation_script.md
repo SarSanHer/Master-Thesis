@@ -29,7 +29,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      sh Run-plink.sh # IMPORTANT: edit this file to add --allow-no-sex to the plink commands, otherwise phenotypes of missing-sex samples are ignored
 
  ## Create VCF file for each chromosome and sort it (Linux machine)
-     # Execute the vcfCooker command line over all the files preiously created for each cromosome:
+     # Execute the vcfCooker command line over all the chromosome files preiously created:
      for path in perl/ctr_chr*.bed; \
      do filename="${path%.*}"; \
      echo ""; \
