@@ -1,6 +1,6 @@
 # Imputation Scripts
 
-This script reports the workflow and commands used for the imputation of SNPs performed using the Michigan Imputation Server. Many of the commands here displayed come from the Michigan Imputation Server user manual.
+This script reports the workflow and commands used for the imputation of SNPs performed using the [Michigan Imputation Server](https://imputationserver.readthedocs.io/en/latest/prepare-your-data/). Many of the commands here displayed come from the Michigan Imputation Server user manual.
 
  ## Get all required data and tools  
  In your computer you must also have installed plink and perl with the module [Term::ReadLine::Gnu](https://coderwall.com/p/kk0hqw/perl-install-term-readline-gnu-on-osx).  
