@@ -52,7 +52,10 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      done
 
  ## Chech VCF files
+     # Create index for our reference genome
      samtools faidx hs37d5.fa # create index for the reference genome
+     
+     #Run the python script over all our VCF files and read the .log to check for problems
      for file in /home/duna/Desktop/TFM/imputation/out/*.vcf; do \
      python checkVCF.py -r hs37d5.fa -o out ${file}; \
      done
