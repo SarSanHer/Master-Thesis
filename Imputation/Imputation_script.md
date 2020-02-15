@@ -43,7 +43,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      ./vcfCooker --in-bfile "$filename" --ref hs37d5.fa --out "out/ctrl_${filename: -5}-vcf" --write-vcf;\ #vcfCooker command
      done
      
-     or path in perl/cases_chr*.bed; \
+     for path in perl/cases_chr*.bed; \
      do filename="${path%.*}"; \
      echo ""; \
      echo "input: $filename"; \
