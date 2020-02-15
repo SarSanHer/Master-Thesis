@@ -53,7 +53,9 @@ This script reports the workflow and commands used for the imputation of SNPs pe
 
  ## Chech VCF files
      samtools faidx hs37d5.fa # create index for the reference genome
-     checkVCF.py -r human_g1k_v37.fasta -o out mystudy_chr1.vcf.gz
+     for file in /home/duna/Desktop/TFM/imputation/out/*.vcf; do \
+     python checkVCF.py -r hs37d5.fa -o out ${file}; \
+     done
 
  ## Phasing with Eagle
      ./eagle --vcfRef HRC.r1-1.GRCh37.chr20.shapeit3.mac5.aa.genotypes.bcf
