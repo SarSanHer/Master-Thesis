@@ -59,12 +59,11 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      for file in /home/duna/Desktop/TFM/imputation/out/*.vcf; do \
      python checkVCF.py -r hs37d5.fa -o out ${file}; \
      done
+     
+## Compress VCFs
+Once we know our files are correct, we have to transform them into .vcf.gz format to upload them to the Michigan Imputation Server.
 
- ## Phasing with Eagle
-     ./eagle --vcfRef HRC.r1-1.GRCh37.chr20.shapeit3.mac5.aa.genotypes.bcf
-     --vcfTarget chunk_20_0000000001_0020000000.vcf.gz  --geneticMapFile genetic_map_chr20_combined_b37.txt
-     --outPrefix chunk_20_0000000001_0020000000.phased --bpStart 1 --bpEnd 25000000 -allowRefAltSwap
-     --vcfOutFormat z
+     for file in out/*.vcf; do bgzip -c "${file}" > "final/${file##*/}.gz"; done
 
 # Upload results to the Michigan Imputation server
 https://imputationserver.sph.umich.edu/index.html#!run/minimac4
