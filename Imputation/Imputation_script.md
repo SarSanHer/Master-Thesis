@@ -51,7 +51,7 @@ This script reports the workflow and commands used for the imputation of SNPs pe
      ./vcfCooker --in-bfile "$filename" --ref hs37d5.fa --out "out/case_${filename: -5}-vcf" --write-vcf;\
      done
 
- ## Chech VCF files
+ ## Check VCF files
      # Create index for our reference genome
      samtools faidx hs37d5.fa # create index for the reference genome
      
