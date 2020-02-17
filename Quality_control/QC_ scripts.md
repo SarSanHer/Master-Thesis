@@ -3,16 +3,17 @@
 This file contains the commands used for the quality control of the samples performed using PLINK. The goal was to obtain files containing only the genotypes which frequencies can be associated to the disease (filtering out low quality or SNPs with other associations).
 
 ## Download and install tools
+     # If PLINK has not been already installed
      wget http://s3.amazonaws.com/plink1-assets/plink_mac_20200121.zip
   
   
  ## Pipeline 
  
- ### Prepare files for PLINK (--make-bed)
+ ### Prepare files for PLINK (if this step has not been done in the data analysis step) 
  To execute plink yu must, either add plink to the PATH, or work from the directory where PLINK is located. The input is the name of the .bim, .bed and .fam file (same for the three files) without the extension. The same applies for the output.
  
-      ./plink --bfile <control_files_name> --make-bed --out <new_control_name>
-      ./plink --bfile <case_files_name> --make-bed --out <new_case_name>
+      ./plink --bfile <ctrl_filename> --make-bed --out <ctrl_plink>
+      ./plink --bfile <case_filename> --make-bed --out <case_plink>
       
       
  ### Filtering
@@ -27,13 +28,13 @@ The filters applied to the case samples were:
  
   
        #CONTROL filtering
-       ./plink --bfile <new_control_name> --make-bed --hwe 0.0001 --out <filtered_control>
+       ./plink --bfile <ctrl_plink> --make-bed --hwe 0.0001 --out <filtered_control>
       
        #extract second column since that one contains the SNPs
        cat <filtered_control.bim> | cut -f2 > <my_SNPs.txt>
   
        #CASE filtering
-       ./plink --bfile <new_case_name> --make-bed --allow-no-sex --het --mind 0.02 --maf 0.05 --geno 0.02 --extract <my_SNPs.txt> --out <filtered_cases>
+       ./plink --bfile <case_plink> --make-bed --allow-no-sex --het --mind 0.02 --maf 0.05 --geno 0.02 --extract <my_SNPs.txt> --out <filtered_cases>
        
        
  ## Population control       
