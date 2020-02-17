@@ -18,22 +18,26 @@ This script details the commands used in order to get information about the data
 ### 2. Get basic statistics
 With PLINK we can obtain statistics of the input files, which creates a set of output files with counts and frequencies that we will later on analyse.
 
-    ./plink --bfile <ctrl_plink> --freq counts --missing --het --out <ctrl_analysis>
-    ./plink --bfile <case_plink> --freq counts --missing --het --out <case_analysis>
+    ./plink --bfile <ctrl_plink> --freqx --missing --het --out <ctrl_analysis>
+    ./plink --bfile <case_plink> --freqx --missing --het --out <case_analysis>
 
 ### 3. Output analysis
 #### Frequency count file
-The output is:
+The output is a tab separated file with the following columns:
 | Header | Definition |
 | ------------- | ------------- |
 | CHR  | Chromosome code  |
 | SNP  | Variant identifier  |
 | A1  | Allele 1 (usually minor)  |
 | A2  | Allele 2 (usually minor)  |
-| C1  | Allele 1 count  |
-| C2  | Allele 2 count  |
-| G0  | Missing genotype count (so C1 + C2 + 2 * G0 is constant on autosomal variants)  |
+| C(HOM A1)  | A1 homozygote count  |
+| C(HET)  | Heterozygote count  |
+| C(HOM A2)  | A2 homozygote count  |
+| C(HAP A1)  | Haploid A1 count (includes male X chromosome)  |
+| C(HAP A2)  | Haploid A2 count  |
+| C(MISSING)  | Missing genotype count |
 
+Singletons are variants that appear once in the cohort and in a heterozygous genotype. In order to know the % of SNPs that are singletons, we simply have to filter the SNPs that have a value of 1 in the 6th column (heterozygote count) and then check that the value is 0:
      
      # Singleton count
-     <ctrl.frq.counts>
+     cat <ctrl.frq.counts> | 
