@@ -40,4 +40,5 @@ The output is a tab separated file with the following columns:
 Singletons are variants that appear once in the cohort and in a heterozygous genotype. In order to know the % of SNPs that are singletons, we simply have to filter the SNPs that have a value of 1 in the 6th column (heterozygote count) and then check that the value is 0:
      
      # Singleton count
-     cat <ctrl.frq.counts> | 
+     awk '($6==1)' ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+     
