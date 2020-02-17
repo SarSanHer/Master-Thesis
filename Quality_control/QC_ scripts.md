@@ -9,7 +9,7 @@ This file contains the commands used for the quality control of the samples perf
   
  ## Pipeline 
  
- ### Prepare files for PLINK (if this step has not been done in the data analysis step) 
+ ### Prepare files for PLINK (if not already done in the data analysis step) 
  To execute plink yu must, either add plink to the PATH, or work from the directory where PLINK is located. The input is the name of the .bim, .bed and .fam file (same for the three files) without the extension. The same applies for the output.
  
       ./plink --bfile <ctrl_filename> --make-bed --out <ctrl_plink>
