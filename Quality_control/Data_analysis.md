@@ -53,3 +53,9 @@ This setting creates two files, one with sample missing data (.lmiss) and anothe
 | N_MISS  | Number of missing genotype call(s), not counting obligatory missings or het. haploids  | N_MISS | idem |
 | N_GENO  | Number of potentially valid call(s)  | N_GENO | idem |
 | F_MISS | Missing call rate | F_MISS | idem |
+
+
+#### d) het
+It creates a list of the heterozygous haploid genotypes found in our samples. The output is a tab separated file in which the 6th column contains the Method-of-moments F coefficient estimate. This estimate predicts the likehood of the observed homozygosity given the expected  homozygosity for a random dataset. 
+
+     awk '{ total += $6 } END { print total/NR }' ctrl.het
