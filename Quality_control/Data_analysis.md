@@ -11,15 +11,17 @@ This script details the commands used in order to get information about the data
  ### 1. Prepare files for PLINK (--make-bed)
  To execute plink yu must, either add plink to the PATH, or work from the directory where PLINK is located. The input is the name of the .bim, .bed and .fam file (same for the three files) without the extension. The same applies for the output.
  
-      ./plink --bfile <ctrl_filename> --make-bed --out <ctrl_plink>
-      ./plink --bfile <case_filename> --make-bed --out <case_plink>
+      ./plink --bfile <ctrl_filename> --make-bed --allow-no-sex --out <ctrl_plink>
+      ./plink --bfile <case_filename> --make-bed --allow-no-sex --out <case_plink>
       
-      
+* In our samples "--allow-no-sex" is required for the case files because there are ambiguous-sex samples, and with this command those are ignored.
+
+
 ### 2. Get basic statistics
 With PLINK we can obtain statistics of the input files, which creates a set of output files with counts and frequencies that we will later on analyse.
 
-    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --out <ctrl_analysis>
-    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --out <case_analysis>
+    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <ctrl_analysis>
+    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <case_analysis>
 
 #### a) freqx
 This option produces a detailed genotype count report in a .frqx file that consists in a tab separated file with the following columns:
