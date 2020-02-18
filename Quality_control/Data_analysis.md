@@ -56,6 +56,7 @@ This setting creates two files, one with sample missing data (.lmiss) and anothe
 
 
 #### d) het
-It creates a list of the heterozygous haploid genotypes found in our samples. The output is a tab separated file in which the 6th column contains the Method-of-moments F coefficient estimate. This estimate predicts the likehood of the observed homozygosity given the expected  homozygosity for a random dataset. 
+It creates a list of the heterozygous haploid genotypes found in our samples. The output is a tab separated file in which the 6th column contains the Method-of-moments F coefficient estimate. This estimate predicts the likehood of the observed homozygosity given the expected  homozygosity for a random dataset. We can compurte the average heterozygosity of the population in the control samples and compare it to the case samples to detect inbreeding in the sample population.
 
      awk '{ total += $6 } END { print total/NR }' ctrl.het
+     awk '{ total += $6 } END { print total/NR }' case.het
