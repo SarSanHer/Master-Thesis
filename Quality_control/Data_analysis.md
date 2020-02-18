@@ -18,12 +18,11 @@ This script details the commands used in order to get information about the data
 ### 2. Get basic statistics
 With PLINK we can obtain statistics of the input files, which creates a set of output files with counts and frequencies that we will later on analyse.
 
-    ./plink --bfile <ctrl_plink> --freqx --missing --het --out <ctrl_analysis>
-    ./plink --bfile <case_plink> --freqx --missing --het --out <case_analysis>
+    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --out <ctrl_analysis>
+    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --out <case_analysis>
 
-### 3. Output analysis
-#### Frequency count file
-The output is a tab separated file with the following columns:
+#### a) freqx
+This option produces a detailed genotype count report in a .frqx file that consists in a tab separated file with the following columns:
 | Header | Definition |
 | ------------- | ------------- |
 | CHR  | Chromosome code  |
@@ -37,8 +36,20 @@ The output is a tab separated file with the following columns:
 | C(HAP A2)  | Haploid A2 count  |
 | C(MISSING)  | Missing genotype count |
 
-Singletons are variants that appear once in the cohort and in a heterozygous genotype. In order to know the % of SNPs that are singletons, we simply have to filter the SNPs that have a value of 1 in the 6th column (heterozygote count) and then check that the value is 0:
+With this file we can obtain information about the abundance of singletons in the data. Singletons are variants that appear once in the cohort and in a heterozygous genotype and, therefore, to know the % of SNPs that are singletons, we have to filter the SNPs that have a value of 1 in the 6th column (heterozygote count) and then check that the value is 0:
      
      # Singleton count
      awk '($6==1)' ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
      
+#### b) maf 0.05
+This option filters the SNPs with a minor allele frequency lower than 5% and gives you the filtering information in the -log file.
+
+#### c) missing
+This setting creates two files, one with sample missing data (.lmiss) and another with variant missing data (.imiss). The output file 
+| lmiss | Definition | imiss | Definition |
+| ------------- | ------------- | ------------- | ------------- |
+| CHR  | Chromosome code  | FID | 	Family ID |
+| SNP  | Variant identifier  | MISS_PHENO | Phenotype missing? (Y/N) |
+| N_MISS  | Number of missing genotype call(s), not counting obligatory missings or het. haploids  | N_MISS | idem |
+| N_GENO  | Number of potentially valid call(s)  | N_GENO | idem |
+| F_MISS | Missing call rate | F_MISS | idem |
