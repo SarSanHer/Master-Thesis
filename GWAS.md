@@ -17,4 +17,4 @@ The Michigan Imputation Server produces a zip file for each chromosome; in order
    
      7z e chr_*.zip -pPASSWORD
 
-The output consists in two files: a '..dose.vcf.gz' and a '.info.gz' for each chromosome.
+The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome.
