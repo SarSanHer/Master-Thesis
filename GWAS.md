@@ -13,7 +13,8 @@ Once the data has been prepared, the GWAS can be performed using [GAPIT](https:/
  ### 1. Merging files
   * Note: when downloading files, those of size over 4Gb were corrupted, careful when downloading! Check that downloaded file size is correct, otherwise you'll get errors.
 
- The Michigan Imputation Server produces a zip file for each chromosome; in order to work with them all in GAPIT, we must merge them into one single vcf file. The files must be uncompressed using 7-Zip program:
+The Michigan Imputation Server produces a zip file for each chromosome; in order to work with them all in GAPIT, we must merge them into one single vcf file. The files must be uncompressed using 7-Zip program:
    
-     brew install p7zip  
-     # enter password provided by the Michigan Imputation Server
+     7z e chr_*.zip -pPASSWORD
+
+The output consists in two files: a '..dose.vcf.gz' and a '.info.gz' for each chromosome.
