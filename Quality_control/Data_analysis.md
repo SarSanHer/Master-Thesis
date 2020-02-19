@@ -24,39 +24,26 @@ With PLINK we can obtain statistics of the input files, which creates a set of o
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <case_analysis>
 
 #### a) freqx
-This option produces a detailed genotype count report in a .frqx file that consists in a tab separated file with the following columns:
-| Header | Definition |
-| ------------- | ------------- |
-| CHR  | Chromosome code  |
-| SNP  | Variant identifier  |
-| A1  | Allele 1 (usually minor)  |
-| A2  | Allele 2 (usually minor)  |
-| C(HOM A1)  | A1 homozygote count  |
-| C(HET)  | Heterozygote count  |
-| C(HOM A2)  | A2 homozygote count  |
-| C(HAP A1)  | Haploid A1 count (includes male X chromosome)  |
-| C(HAP A2)  | Haploid A2 count  |
-| C(MISSING)  | Missing genotype count |
-
-With this file we can obtain information about the abundance of singletons in the data. Singletons are variants that appear once in the cohort and in a heterozygous genotype and, therefore, to know the % of SNPs that are singletons, we have to filter the SNPs that have a value of 1 in the 6th column (heterozygote count) and then check that the value is 0:
+This option produces a detailed genotype count report in a .frqx file that consists in a tab separated file. By filtering the SNPs that have a value of 1 in the heterozygote count (6th column) and 0 for the homozygote count of both alleles (columns 5th and 7th), we can obtain the count of singletons since they are the variants that appear once in the cohort and in a heterozygous genotype. We can filter those SNPs with the following command:
      
      # Singleton count
      awk '($6==1)' ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+     awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
      
 #### b) maf 0.05
 This option filters the SNPs with a minor allele frequency lower than 5% and gives you the filtering information in the -log file.
 
 #### c) missing
-This setting creates two files, one with sample missing data (.lmiss) and another with variant missing data (.imiss). The output file 
-| lmiss | Definition | imiss | Definition |
-| ------------- | ------------- | ------------- | ------------- |
-| CHR  | Chromosome code  | FID | 	Family ID |
-| SNP  | Variant identifier  | MISS_PHENO | Phenotype missing? (Y/N) |
-| N_MISS  | Number of missing genotype call(s), not counting obligatory missings or het. haploids  | N_MISS | idem |
-| N_GENO  | Number of potentially valid call(s)  | N_GENO | idem |
-| F_MISS | Missing call rate | F_MISS | idem |
+This setting creates two files, one with sample missing data (.lmiss) and another with variant missing data (.imiss). We will count the SNPs or genotypes that have a missing call rate over 2% using the following commands:
 
-
+     # CONTROL
+     awk '($6>0.02)' ctrl.imiss | wc -l # genotypes
+     awk '($5>0.02)' ctrl.lmiss | wc -l # SNPs     
+     
+     # CASES
+     awk '($6>0.02)' case.imiss | wc -l # genotypes
+     awk '($5>0.02)' case.lmiss | wc -l # SNPs
+     
 #### d) het
 It creates a list of the heterozygous haploid genotypes found in our samples. The output is a tab separated file in which the 6th column contains the Method-of-moments F coefficient estimate. This estimate predicts the likehood of the observed homozygosity given the expected  homozygosity for a random dataset. We can compurte the average heterozygosity of the population in the control samples and compare it to the case samples to detect inbreeding in the sample population.
 
