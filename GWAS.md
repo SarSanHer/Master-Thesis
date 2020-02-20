@@ -17,4 +17,44 @@ The Michigan Imputation Server produces a zip file for each chromosome; in order
    
      7z e chr_*.zip -pPASSWORD
 
-The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome.
+The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome. In order to merge all chromosome files into one single file, we can use [vcftools](https://github.com/vcftools/vcftools):
+
+     vcf-concat chr*.dose.vcf.gz | gzip > out.vcf.gz
+
+
+### 2. Data analysis
+Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:
+**1. Create plink files**
+
+    ./plink --bfile <ctrl_filename> --make-bed --allow-no-sex --out <ctrl_plink>
+    ./plink --bfile <case_filename> --make-bed --allow-no-sex --out <case_plink>
+
+**2. Get basic statistics**
+
+    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <ctrl_analysis>
+    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <case_analysis>
+    
+    # Singleton count
+    awk '($6==1)' ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+    awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+    
+    # Missing data
+    awk '($6>0.02)' ctrl.imiss | wc -l # ctr genotypes
+    awk '($5>0.02)' ctrl.lmiss | wc -l # ctr SNPs     
+    awk '($6>0.02)' case.imiss | wc -l # case genotypes
+    awk '($5>0.02)' case.lmiss | wc -l # case SNPs
+    
+    # Heterozygosis 
+    awk '{ total += $6 } END { print total/NR }' ctrl.het
+    awk '{ total += $6 } END { print total/NR }' case.het
+    
+Population stratification is also checked using the same R code as before.
+
+### 3. Divide dataset
+The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
+
+    # Commands 
+
+## GAPIT 
+With the data analysed and prepared, the GWAS analysis can be performed with the GAPIT toolbox in R.
+
