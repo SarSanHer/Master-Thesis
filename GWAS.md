@@ -23,7 +23,7 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 
 
 ### 2. Data analysis
-Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:
+Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
 **1. Create plink files**
 
     ./plink --bfile <ctrl_filename> --make-bed --allow-no-sex --out <ctrl_plink>
