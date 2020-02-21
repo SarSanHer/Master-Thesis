@@ -9,6 +9,14 @@ Once the data has been prepared, the GWAS can be performed using [GAPIT](https:/
     # for mac
     brew install p7zip
     
+    # refer to https://github.com/Santy-8128/DosageConvertor
+    brew install cmake
+    sudo easy-install pip
+    pip install --user cget --ignore-installed six
+    cd DosageConvertor
+    bash install.sh
+    
+    
  ## Data preparation
  ### 1. Merging files
   * Note: when downloading files, those of size over 4Gb were corrupted, careful when downloading! Check that downloaded file size is correct, otherwise you'll get errors.
@@ -18,9 +26,23 @@ The Michigan Imputation Server produces a zip file for each chromosome; in order
      # In ctr/case directory:
      for file in chr*.zip; do 7z e "${file}" -pPASSWORD; done
 
-The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome. In order to merge all chromosome files into one single file, we can use [vcftools](https://github.com/vcftools/vcftools):
+The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome. In order to merge all chromosome files into one single file, we can use [bcftools](http://samtools.github.io/bcftools/bcftools.html):
 
-     vcf-concat chr*.dose.vcf.gz | gzip > out.vcf.gz
+     # Obtain PLINK files
+     ./DosageConvertor    --vcfDose      TestDataImputedVCF.dose.vcf.gz
+                          --info         TestDataImputedVCF.info          (optional)
+                          --prefix       OutPrefix
+                          --type         plink                            (default)
+                          --format       1                                (or 2,3)
+                          
+                          
+     # Transform files to VCF
+     ./plink --dosage 
+     
+     
+     # Merge VCF files
+     for file in *dose*; do echo "${file}" >> files.txt; done # create txt with file names we want to use
+     bcftools -- concat chr*.dose.vcf.gz | gzip > out.vcf.gz       
 
 
 ### 2. Data analysis
