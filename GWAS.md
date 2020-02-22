@@ -29,16 +29,18 @@ The Michigan Imputation Server produces a zip file for each chromosome; in order
 The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome. In order to merge all chromosome files into one single file, we can use [bcftools](http://samtools.github.io/bcftools/bcftools.html):
 
      # Obtain PLINK files
-     ./DosageConvertor    --vcfDose      TestDataImputedVCF.dose.vcf.gz
-                          --info         TestDataImputedVCF.info          (optional)
-                          --prefix       OutPrefix
-                          --type         plink                            (default)
-                          --format       1                                (or 2,3)
+     ./DosageConvertor --vcfDose TestDataImputedVCF.dose.vcf.gz \
+     -info TestDataImputedVCF.info \
+     --prefix OutPrefix \
+     --type plink \
+     --format 1
                           
                           
      # Transform files to VCF
-     ./plink --dosage 
-     
+     ./plink2 --import-dosage chr*.plink.dosage.gz \
+     --map chr*.plink.map \
+     --fam chr*.plink.fam  \
+     --recode vcf --out OutPrefix
      
      # Merge VCF files
      for file in *dose*; do echo "${file}" >> files.txt; done # create txt with file names we want to use
