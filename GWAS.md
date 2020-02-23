@@ -34,6 +34,8 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      --prefix OutPrefix \
      --type plink \
      --format 1
+     
+     for file in /Volumes/TFM/ctr/chr*.dose.vcf.gz; do out="${file%.*.*.*}"; ./DosageConvertor --vcfDose "${file}"  -info "${file%.*.*.*}.info.gz"  --prefix "/Volumes/GRU/TFM/MIS_results/ctrl/${out##*/}"  --type plink  --format 1; done
                           
                           
      # Transform files to VCF
