@@ -45,8 +45,7 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      --recode vcf --out OutPrefix
      
      # Merge VCF files
-     for file in *dose*; do echo "${file}" >> files.txt; done # create txt with file names we want to use
-     bcftools -- concat chr*.dose.vcf.gz | gzip > out.vcf.gz       
+     bcftools concat ctrl/chr{1..22}.vcf -o ctrl_imput-vcf       
 
 
 ### 2. Data analysis
