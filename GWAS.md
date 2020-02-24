@@ -44,7 +44,7 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      --fam chr*.plink.fam  \
      --recode vcf --out OutPrefix
      
-     # Merge VCF files
+     # Join VCF files
      bcftools concat ctrl/chr{1..22}.vcf -o ctrl_imput-vcf       
 
 
