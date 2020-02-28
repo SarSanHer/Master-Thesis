@@ -43,31 +43,31 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      --recode vcf --out OutPrefix
      
      # Join VCF files and compress
-     bcftools concat ctrl/chr{1..22}.vcf -o ctrl_joined-vcf       
-     bgzip -c ctrl_joined-vcf > ctrl_joined-vcf.gz
+     bcftools concat ctrl/chr{1..22}.vcf -o ctrl.vcf       
+     bgzip -c ctrl.vcf > ctrl.vcf.gz
 
 
 ### 2. Data analysis
 Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
 **1. Create plink files**
 
-    ./plink --bfile <ctrl_filename> --make-bed --allow-no-sex --out <ctrl_plink>
-    ./plink --bfile <case_filename> --make-bed --allow-no-sex --out <case_plink>
+    ./plink --vcf <ctrl.vcf.gz> --make-bed --allow-no-sex --out <ctrl_plink>
+    ./plink --vcf <case.vcf.gz> --make-bed --allow-no-sex --out <case_plink>
 
 **2. Get basic statistics**
 
-    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <ctrl_analysis>
-    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --out <case_analysis>
+    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <analysis_ctrl>
+    ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
     
     # Singleton count
-    awk '($6==1)' ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+    awk '($6==1)' analysis_ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
     awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
     
     # Missing data
-    awk '($6>0.02)' ctrl.imiss | wc -l # ctr genotypes
-    awk '($5>0.02)' ctrl.lmiss | wc -l # ctr SNPs     
-    awk '($6>0.02)' case.imiss | wc -l # case genotypes
-    awk '($5>0.02)' case.lmiss | wc -l # case SNPs
+    awk '($6>0.02)' analysis_ctrl.imiss | wc -l # ctr genotypes
+    awk '($5>0.02)' analysis_ctrl.lmiss | wc -l # ctr SNPs     
+    awk '($6>0.02)' analysis_case.imiss | wc -l # case genotypes
+    awk '($5>0.02)' analysis_case.lmiss | wc -l # case SNPs
     
     # Heterozygosis 
     awk '{ total += $6 } END { print total/NR }' ctrl.het
@@ -81,5 +81,6 @@ The dataset is divided in order to obtain a subdataset for validation. The sampl
     # Commands 
 
 ## GAPIT 
-With the data analysed and prepared, the GWAS analysis can be performed with the GAPIT toolbox in R.
+The files must be transformed into HapMap format, which is possible with the following commands:
 
+After all data has been analysed and transformed into the right formt, the GAPIT analysis is performed using an R code.
