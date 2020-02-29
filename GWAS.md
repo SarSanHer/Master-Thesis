@@ -6,10 +6,10 @@ Once the data has been prepared, the GWAS can be performed using [GAPIT](https:/
  ## Get all required data and tools  
  Download the required R packiges pointed in the [GAPIT](https://www.maizegenetics.net/gapit) manual tool
  
-    # for mac
+    # Decompress files (for mac)
     brew install p7zip
     
-    # refer to https://github.com/Santy-8128/DosageConvertor
+    # DosageConvertor (refer to https://github.com/Santy-8128/DosageConvertor)
     brew install cmake
     sudo easy-install pip
     pip install --user cget --ignore-installed six
@@ -27,14 +27,13 @@ The Michigan Imputation Server produces a zip file for each chromosome; in order
 The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chromosome. In order to merge all chromosome files into one single file, we can use [bcftools](http://samtools.github.io/bcftools/bcftools.html):
 
      # Obtain PLINK files
-     ./DosageConvertor --vcfDose TestDataImputedVCF.dose.vcf.gz \
-     -info TestDataImputedVCF.info \
-     --prefix OutPrefix \
+     for TestDataImputedVCF in Directory; do Prefix="${TestDataImputedVCF%.*.*.*}";  \
+     ./DosageConvertor --vcfDose "${TestDataImputedVCF}.dose.vcf.gz" \
+     -info "${TestDataImputedVCF}.info.gz" \
+     --prefix "Path/${Prefix##*/}" \
      --type plink \
-     --format 1
-     
-     for file in /Volumes/TFM/ctr/chr*.dose.vcf.gz; do out="${file%.*.*.*}"; ./DosageConvertor --vcfDose "${file}"  -info "${file%.*.*.*}.info.gz"  --prefix "/Volumes/GRU/TFM/MIS_results/ctrl/${out##*/}"  --type plink  --format 1; done
-                          
+     --format 1; done
+                               
                           
      # Transform files to VCF
      ./plink2 --import-dosage chr*.plink.dosage.gz \
@@ -51,8 +50,8 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
 **1. Create plink files**
 
-    ./plink --vcf <ctrl.vcf.gz> --make-bed --allow-no-sex --out <ctrl_plink>
-    ./plink --vcf <case.vcf.gz> --make-bed --allow-no-sex --out <case_plink>
+    ./plink --vcf <ctrl.vcf.gz> --make-bed --double-id --allow-no-sex --out <ctrl_plink>
+    ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
 
 **2. Get basic statistics**
 
@@ -64,10 +63,11 @@ Check again same parameters we did before filtering and impotation to get a gene
     awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
     
     # Missing data
-    awk '($6>0.02)' analysis_ctrl.imiss | wc -l # ctr genotypes
-    awk '($5>0.02)' analysis_ctrl.lmiss | wc -l # ctr SNPs     
-    awk '($6>0.02)' analysis_case.imiss | wc -l # case genotypes
-    awk '($5>0.02)' analysis_case.lmiss | wc -l # case SNPs
+    awk '{ total += $5; count++ } END { print total/count }' analysis_ctrl.lmiss # ctr SNPs 
+    awk '{ total += $6; count++ } END { print total/count }' analysis_ctrl.imiss # ctr genotypes 
+    awk '{ total += $5; count++ } END { print total/count }' analysis_case.lmiss # ctr SNPs 
+    awk '{ total += $6; count++ } END { print total/count }' analysis_case.imiss # ctr genotypes 
+   
     
     # Heterozygosis 
     awk '{ total += $6 } END { print total/NR }' ctrl.het
