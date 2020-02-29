@@ -63,10 +63,10 @@ Check again same parameters we did before filtering and impotation to get a gene
     awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
     
     # Missing data
-    awk '{ total += $5; count++ } END { print total/count }' analysis_ctrl.lmiss # ctr SNPs 
-    awk '{ total += $6; count++ } END { print total/count }' analysis_ctrl.imiss # ctr genotypes 
-    awk '{ total += $5; count++ } END { print total/count }' analysis_case.lmiss # ctr SNPs 
-    awk '{ total += $6; count++ } END { print total/count }' analysis_case.imiss # ctr genotypes 
+    awk '{ total += $5; count++ } END { print total/count }' analysis_ctrl.lmiss # ctrl SNPs 
+    awk '{ total += $6; count++ } END { print total/count }' analysis_ctrl.imiss # ctrl genotypes 
+    awk '{ total += $5; count++ } END { print total/count }' analysis_case.lmiss # case SNPs 
+    awk '{ total += $6; count++ } END { print total/count }' analysis_case.imiss # case genotypes 
    
     
     # Heterozygosis 
