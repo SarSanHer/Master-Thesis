@@ -87,7 +87,8 @@ In this step we filter the imputed data, transform into GAPIT compatible format 
  **3.2 Transform to HapMap**
  Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using bcftools:
  
-    bcftools query -f '%REF %CHROM %POS %ALT{0}\n' case.vcf.gz
+    bcftools query -f '%CHROM\t%REF\t%POS\t[\t%SAMPLE=%GT]\n' /Volumes/TFM/vcf_case/chr20.vcf > Desktop/try.txt
+    
     https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
     ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
 
