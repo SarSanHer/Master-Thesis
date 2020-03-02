@@ -78,14 +78,17 @@ Population stratification is also checked using the same R code as before.
 ### 3. Data Preparation
 In this step we filter the imputed data, transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
 
-**3.1 Filtering**
-We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
+ **3.1 Filtering**
+ We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
 
     ./plink --vcf <case_plink> --make-bed --allow-no-sex --mind 0.02 --maf 0.05 --geno 0.02 --extract <my_SNPs.txt> --out <filtered_cases>
     
     
-**3.2 Divide Dataset**
-The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
+ **3.2 Transform to HapMap**
+ Genotype information in GAPIT must be imported in either HapMap or 
+
+ **3.3 Divide Dataset**
+ The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
 
     # Commands 
 
