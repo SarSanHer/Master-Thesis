@@ -88,6 +88,9 @@ In this step we filter the imputed data, transform into GAPIT compatible format 
  Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using bcftools:
  
     bcftools query -f '%REF %CHROM %POS %ALT{0}\n' case.vcf.gz
+    https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
+    ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
+
 
  **3.3 Divide Dataset**
  The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
