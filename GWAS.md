@@ -42,7 +42,7 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      --recode vcf --out OutPrefix
      
      # Join VCF files and compress
-     bcftools concat ctrl/chr{1..22}.vcf -o ctrl.vcf       
+     bcftools concat ctrl/chr{1..22}.vcf -O z -o ctrl.vcf       
      bgzip -c ctrl.vcf > ctrl.vcf.gz
 
 
