@@ -48,12 +48,12 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 
 ### 2. Data analysis
 Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
-**1. Create plink files**
+**2.1 Create plink files**
 
     ./plink --vcf <ctrl.vcf.gz> --make-bed --double-id --allow-no-sex --out <ctrl_plink>
     ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
 
-**2. Get basic statistics**
+**2.2 Get basic statistics**
 
     ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <analysis_ctrl>
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
@@ -78,13 +78,13 @@ Population stratification is also checked using the same R code as before.
 ### 3. Data Preparation
 In this step we filter the imputed data, transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
 
-**1. Filtering**
+**3.1 Filtering**
 We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
 
     ./plink --vcf <case_plink> --make-bed --allow-no-sex --mind 0.02 --maf 0.05 --geno 0.02 --extract <my_SNPs.txt> --out <filtered_cases>
     
     
-**2. Divide Dataset**
+**3.2 Divide Dataset**
 The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
 
     # Commands 
