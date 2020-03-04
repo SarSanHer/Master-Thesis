@@ -57,6 +57,8 @@ In this step we filter the imputed data, keeping only the SNPs we found to be in
 
 **2.2 Filtering**  
  We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
+ 
+    cat refs.txt| while read line; do awk "/${line}/" case_plink.bim >> matches.txt; done
 
     ./plink --bfile /Volumes/SSD/vcfs/case/filtering/case_plink --allow-no-sex --extract /Volumes/GRU/TFM/plink_files/my_SNPs.txt --make-bed --out /Volumes/SSD/vcfs/case/filtering/mySNPs_case
     
