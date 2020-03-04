@@ -55,7 +55,7 @@ In this step we filter the imputed data, keeping only the SNPs we found to be in
     ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
     
 
-**2.2 Filtering**
+**2.2 Filtering**  
  We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
 
     ./plink --bfile /Volumes/SSD/vcfs/case/filtering/case_plink --allow-no-sex --extract /Volumes/GRU/TFM/plink_files/my_SNPs.txt --make-bed --out /Volumes/SSD/vcfs/case/filtering/mySNPs_case
@@ -94,14 +94,14 @@ We transform into GAPIT compatible format (HapMap) and divide the dataset into t
     # Commands 
 
  
- **3.1 Transform to HapMap**
+ **3.1 Transform to HapMap**  
  Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL, a tool by the creators of GAPIT:
      
     https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
     ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
 
 
- **3.2 Divide Dataset**
+ **3.2 Divide Dataset**  
  The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
 
     # Commands 
