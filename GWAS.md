@@ -47,13 +47,13 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 
 
 ### 2. Quality analysis
-In this step we filter the imputed data, keeping only the SNPs 
+In this step we filter the imputed data, keeping only the SNPs we found to be in equlibrium before. We also apply the same filters as before (maf, geno, mind).
 
-Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
+
 **2.1 Create plink files**
 
-    ./plink --vcf <ctrl.vcf.gz> --make-bed --double-id --allow-no-sex --out <ctrl_plink>
     ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
+    
 
 **2.2 Filtering**
  We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
@@ -61,6 +61,7 @@ Check again same parameters we did before filtering and impotation to get a gene
     ./plink --bfile /Volumes/SSD/vcfs/case/filtering/case_plink --allow-no-sex --extract /Volumes/GRU/TFM/plink_files/my_SNPs.txt --make-bed --out /Volumes/SSD/vcfs/case/filtering/mySNPs_case
     
     ./plink --vcf <case_plink> --make-bed  --mind 0.02 --maf 0.05 --geno 0.02 --out <filtered_cases>
+    
     
     
 **2.3 Get basic statistics**
@@ -86,6 +87,7 @@ Check again same parameters we did before filtering and impotation to get a gene
 Population stratification is also checked using the same R code as before.  
 
 
+
 ### 3. Data preparation
 We transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
 
@@ -104,6 +106,7 @@ We transform into GAPIT compatible format (HapMap) and divide the dataset into t
 
     # Commands 
     
+
 
 ## GAPIT 
 The files must be transformed into HapMap format, which is possible with the following commands:
