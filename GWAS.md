@@ -46,14 +46,24 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
      bgzip -c ctrl.vcf > ctrl.vcf.gz
 
 
-### 2. Data analysis
+### 2. Quality analysis
+In this step we filter the imputed data, keeping only the SNPs 
+
 Check again same parameters we did before filtering and impotation to get a general overview of how our data looks after the treatment. We use the same commands as before:  
 **2.1 Create plink files**
 
     ./plink --vcf <ctrl.vcf.gz> --make-bed --double-id --allow-no-sex --out <ctrl_plink>
     ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
 
-**2.2 Get basic statistics**
+**2.2 Filtering**
+ We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
+
+    ./plink --bfile /Volumes/SSD/vcfs/case/filtering/case_plink --allow-no-sex --extract /Volumes/GRU/TFM/plink_files/my_SNPs.txt --make-bed --out /Volumes/SSD/vcfs/case/filtering/mySNPs_case
+    
+    ./plink --vcf <case_plink> --make-bed  --mind 0.02 --maf 0.05 --geno 0.02 --out <filtered_cases>
+    
+    
+**2.3 Get basic statistics**
 
     ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <analysis_ctrl>
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
@@ -73,30 +83,27 @@ Check again same parameters we did before filtering and impotation to get a gene
     awk '{ total += $6 } END { print total/NR }' ctrl.het
     awk '{ total += $6 } END { print total/NR }' case.het
     
-Population stratification is also checked using the same R code as before.
+Population stratification is also checked using the same R code as before.  
 
-### 3. Data Preparation
-In this step we filter the imputed data, transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
 
- **3.1 Filtering**
- We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
+### 3. Data preparation
+We transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
 
-    ./plink --vcf <case_plink> --make-bed --allow-no-sex --mind 0.02 --maf 0.05 --geno 0.02 --extract <my_SNPs.txt> --out <filtered_cases>
-    
-    
- **3.2 Transform to HapMap**
- Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using bcftools:
+    # Commands 
+
  
-    bcftools query -f '%CHROM\t%REF\t%POS\t[\t%SAMPLE=%GT]\n' /Volumes/TFM/vcf_case/chr20.vcf > Desktop/try.txt
-    
+ **3.1 Transform to HapMap**
+ Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL, a tool by the creators of GAPIT:
+     
     https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
     ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
 
 
- **3.3 Divide Dataset**
+ **3.2 Divide Dataset**
  The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
 
     # Commands 
+    
 
 ## GAPIT 
 The files must be transformed into HapMap format, which is possible with the following commands:
