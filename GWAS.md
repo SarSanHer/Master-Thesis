@@ -62,23 +62,18 @@ We extract only the SNPs in equlibrium (found in the first data analysis step, p
 
 **2.2 Get basic statistics**
 
-    ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <analysis_ctrl>
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
     
     # Singleton count
-    awk '($6==1)' analysis_ctrl.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
-    awk '($6==1)' case.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
+    awk '($6==1)' case_analysis.frqx | awk -F "\t" '{ if(($5 == 0) || ($7 == 0)) {print} }' | wc -l
     
     # Missing data
-    awk '{ total += $5; count++ } END { print total/count }' analysis_ctrl.lmiss # ctrl SNPs 
-    awk '{ total += $6; count++ } END { print total/count }' analysis_ctrl.imiss # ctrl genotypes 
-    awk '{ total += $5; count++ } END { print total/count }' analysis_case.lmiss # case SNPs 
-    awk '{ total += $6; count++ } END { print total/count }' analysis_case.imiss # case genotypes 
+    awk '{ total += $5; count++ } END { print total/count }' case_analysis.lmiss # case SNPs 
+    awk '{ total += $6; count++ } END { print total/count }' case_analysis.imiss # case genotypes 
    
     
     # Heterozygosis 
-    awk '{ total += $6 } END { print total/NR }' ctrl.het
-    awk '{ total += $6 } END { print total/NR }' case.het
+    awk '{ total += $6 } END { print total/NR }' case_analysis.het
     
 Population stratification is also checked using the same R code as before.  
 
