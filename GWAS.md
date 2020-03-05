@@ -50,23 +50,17 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 In this step we filter the imputed data, keeping only the SNPs we found to be in equlibrium before. We also apply the same filters as before (maf, geno, mind).
 
 
-**2.1 Create plink files**
+**2.1 Pre-filtering**
+We extract only the SNPs in equlibrium (found in the first data analysis step, prior imputation). The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%.
 
-    ./plink --vcf <case.vcf.gz> --make-bed --double-id --allow-no-sex --out <case_plink>
+    # Obtain SNP's IDs
+    awk ' { print $1":"$4":"$5”:”$6} ' ctrl_original_bim >> <matchSNP.txt> #all SNPs passed the filter so we can obtain the IDs from this file
+    
+    # Filtering
+    ./plink --vcf /Volumes/SSD/vcfs/case/vcf_files/case.vcf.gz --extract <matchSNP.txt> --allow-no-sex --make-bed --double-id --out <filtered_cases>
     
 
-**2.2 Filtering**  
- We extract the same SNPs we found in equilibrium in the control ichip in the first data analysis step (prior imutation). We also filter out all SNPs that do not meet the quality criteria assessed in the first filtering step.
- 
-    cat refs.txt| while read line; do awk "/${line}/" case_plink.bim >> matches.txt; done
-
-    ./plink --bfile /Volumes/SSD/vcfs/case/filtering/case_plink --allow-no-sex --extract /Volumes/GRU/TFM/plink_files/my_SNPs.txt --make-bed --out /Volumes/SSD/vcfs/case/filtering/mySNPs_case
-    
-    ./plink --vcf <case_plink> --make-bed  --mind 0.02 --maf 0.05 --geno 0.02 --out <filtered_cases>
-    
-    
-    
-**2.3 Get basic statistics**
+**2.2 Get basic statistics**
 
     ./plink --bfile <ctrl_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <analysis_ctrl>
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
