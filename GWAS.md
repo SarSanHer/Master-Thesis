@@ -1,7 +1,7 @@
 # GWAS script
 
-This file contains the commands used for the data processing after the SNPs' imputation through the Michigan Imputation Server. The resulting .zip files from each chromosome were merged into one file and then the information was analysed in order to obtain an overview of the data: we computed basic statistics of the data and performed a population stratification analysis again. Afterwards, the data was divided between training and validation (La Princesa, La Paz and Clínico; and Valcecillas respectively).  
-Once the data has been prepared, the GWAS can be performed using [GAPIT](https://www.maizegenetics.net/gapit). From this analysis we will find SNPs that link BMI and rheumatic arthritis.
+This file contains the commands used for the data processing after the SNPs' imputation through the Michigan Imputation Server. The resulting .zip files from each chromosome were transformed and merged into one file that was analysed to obtain an overview of the data: we computed basic statistics of the data and performed a population stratification analysis again.
+After the overview of the data, files were transformed to GAPIT compatible format: HapMap, and the dataset was divided in training and validation (La Princesa, La Paz and Clínico; and Valcecillas respectively). Once the data was prepared, the GWAS was performed using [GAPIT](https://www.maizegenetics.net/gapit). From this analysis we found which SNPs associated to BMI and rheumatic arthritis.
 
  ## Get all required data and tools  
  Download the required R packiges pointed in the [GAPIT](https://www.maizegenetics.net/gapit) manual tool
@@ -15,6 +15,7 @@ Once the data has been prepared, the GWAS can be performed using [GAPIT](https:/
     pip install --user cget --ignore-installed six
     cd DosageConvertor
     bash install.sh
+       
     
     
  ## Data preparation
@@ -51,10 +52,10 @@ In this step we filter the imputed data, keeping only the SNPs we found to be in
 
 
 **2.1 Pre-filtering**
-We extract only the SNPs in equlibrium (found in the first data analysis step, prior imputation). The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%.
+We extract only the SNPs in equlibrium found in the case files prior imputation. The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%.
 
     # Obtain SNP's IDs
-    awk ' { print $1":"$4":"$5”:”$6} ' ctrl_original_bim >> <matchSNP.txt> #all SNPs passed the filter so we can obtain the IDs from this file
+    awk ' { print $1":"$4":"$5”:”$6} ' case_postFilter_bim >> <matchSNP.txt> #all SNPs passed the filter so we can obtain the IDs from this file
     
     # Filtering
     ./plink --vcf /Volumes/SSD/vcfs/case/vcf_files/case.vcf.gz --extract <matchSNP.txt> --allow-no-sex --make-bed --double-id --out <filtered_cases>
@@ -81,12 +82,9 @@ Population stratification is also checked using the same R code as before.
 
 ### 3. Data preparation
 We transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
-
-    # Commands 
-
  
  **3.1 Transform to HapMap**  
- Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL, a tool by the creators of GAPIT:
+Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL (download [here](https://www.maizegenetics.net/tassel)), a tool by the creators of GAPIT.
      
     https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
     ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
