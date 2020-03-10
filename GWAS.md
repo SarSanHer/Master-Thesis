@@ -84,7 +84,7 @@ Population stratification is also checked using the same R code as before.
 We transform into GAPIT compatible format (HapMap) and divide the dataset into training and validation. Now we only work with the case files.
  
  **3.1 Transform to HapMap**  
-Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL (download [here](https://www.maizegenetics.net/tassel)), a tool by the creators of GAPIT.
+Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL (download [here](https://www.maizegenetics.net/tassel)), a tool by the creators of GAPIT. To transform the file, go to the directory to where TASSEL was download and run the following command:
      
     https://bitbucket.org/tasseladmin/tassel-5-source/src/master/run_pipeline.pl
     ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap -runfork1C
