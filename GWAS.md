@@ -52,13 +52,18 @@ In this step we filter the imputed data, keeping only the SNPs we found to be in
 
 
 **2.1 Pre-filtering**
-We extract only the SNPs in equlibrium found in the case files prior imputation. The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%.
+We extract only the SNPs in equlibrium found in the case files prior imputation. The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%. 
 
     # Obtain SNP's IDs
     awk ' { print $1":"$4":"$5”:”$6} ' case_postFilter_bim >> <matchSNP.txt> #all SNPs passed the filter so we can obtain the IDs from this file
     
     # Filtering
     ./plink --vcf /Volumes/SSD/vcfs/case/vcf_files/case.vcf.gz --extract <matchSNP.txt> --allow-no-sex --make-bed --double-id --out <filtered_cases>
+    
+The final filtering step is extracting the genotypes for which we have phenotypic data. Using R code, I take the ID column from the excel file with the phenotype's data, and I create a tsv with famili ID in the first column (1 for all), and the patient code in the second column. Then I extract those profiles from my genotypes' file using PLINK:
+
+    #Extract genotypes
+    ./plink --bfile <filtered_cases> --keep <fam_ID.txt> --allow-no-sex --make-bed --recode vcf --double-id --out <filtExtractCases>
     
 
 **2.2 Get basic statistics**
@@ -86,7 +91,7 @@ We transform into GAPIT compatible format (HapMap) and divide the dataset into t
  **3.1 Transform to HapMap**  
 Genotype information in GAPIT must be imported in either HapMap. We can transform the vcf to HapMap using TASSEL (download [here](https://www.maizegenetics.net/tassel), info about the source [here](https://bitbucket.org/tasseladmin/tassel-5-source/src/master)), a tool by the creators of GAPIT. To transform the file, go to the directory to where TASSEL was download and run the following command:
      
-    ./run_pipeline.pl -Xmx5g -fork1 -vcf case.vcf.gz -export -exportType Hapmap
+    ./run_pipeline.pl -Xmx5g -fork1 -vcf <filtExtractCases.vcf> -export -exportType Hapmap
 
 
  **3.2 Divide Dataset**  
