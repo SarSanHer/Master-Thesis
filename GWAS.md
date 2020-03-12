@@ -51,7 +51,7 @@ The output consists in two files: a '.dose.vcf.gz' and a '.info.gz' for each chr
 In this step we filter the imputed data, keeping only the SNPs we found to be in equlibrium before. We also apply the same filters as before (maf, geno, mind).
 
 
-**2.1 Pre-filtering**
+**2.1 Pre-filtering**  
 We extract only the SNPs in equlibrium found in the case files prior imputation. The IDs of the SNPs have changed and are no longer rs* but chr:position:nt:nt, so we need first to obtain the IDs of the SNPs and then extract those SNPs from the cases vcf imputed. We also filter out SNPs with minor allele frequency under 5%. 
 
     # Obtain SNP's IDs
@@ -65,7 +65,8 @@ The final filtering step is extracting the genotypes for which we have phenotypi
     #Extract genotypes
     ./plink --bfile <filtered_cases> --keep <fam_ID.txt> --allow-no-sex --make-bed --recode vcf --double-id --out <filtExtractCases>
     
-
+  
+    
 **2.2 Get basic statistics**
 
     ./plink --bfile <case_plink> --freqx --maf 0.05 --missing --het --make-bed --allow-no-sex --double-id --out <case_analysis>
