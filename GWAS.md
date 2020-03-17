@@ -96,9 +96,12 @@ Genotype information in GAPIT must be imported in either HapMap. We can transfor
 
 
  **3.2 Divide Dataset**  
- The dataset is divided in order to obtain a subdataset for validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using the following commands:
+ The dataset is divided in order to obtain a subdataset for training and another validation. The samples collected for Valdecillas hospital are substracted from the whole and two new files are created using R code. The characteristics of the phenotypic data, as well as the population structure, are analysed and compared to stablish the suitability of the split and reject the random split alternative. Prior this step, a phenotypics traits association had been carried out (go to phenotypeAnalysis.md). 
 
-    # Commands 
+    # Commands to extract patiens IDs from genotype data
+    cat trainCases.fam | awk '{print $2}' > trainIDs.txt
+    cat valCases.fam | awk '{print $2}' > valIDs.txt
+    
     
 
 
