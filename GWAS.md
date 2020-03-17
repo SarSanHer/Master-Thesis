@@ -102,7 +102,9 @@ Genotype information in GAPIT must be imported in either HapMap. We can transfor
     cat trainCases.fam | awk '{print $2}' > trainIDs.txt
     cat valCases.fam | awk '{print $2}' > valIDs.txt
     
-    
+    # Command for PCA analysis
+    ./plink --bfile <trainCases> --pca --out <trainPCA>
+    ./plink --bfile <valCases> --pca --out <valPCA>
 
 
 ## GAPIT 
