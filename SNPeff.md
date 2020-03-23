@@ -16,5 +16,5 @@ The program can be installed from its website ([link](http://snpeff.sourceforge.
 
 ## Running program
 
-    # code
+    java -Xmx4g -jar snpEff.jar -v -stats <train.html> GRCh37.75 <trainCases.vcf> > <trainCases.ann.vcf>
     
