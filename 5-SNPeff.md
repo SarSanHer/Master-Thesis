@@ -16,7 +16,7 @@ The program can be installed from its website ([link](http://snpeff.sourceforge.
 
 ## Running program
 
-    java -Xmx4g -jar snpEff.jar -v -stats <train.html> GRCh37.75 <trainCases.vcf> > <trainCases.ann.vcf>
+    java -Xmx4g -jar snpEff.jar -v -stats <filteredCases.html> GRCh37.75 <filteredCases.vcf> > <filteredCases.ann.vcf>
     
 ## Solving errors
 1. Fatal error: 'I' in VCF file:
