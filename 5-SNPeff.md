@@ -18,3 +18,6 @@ The program can be installed from its website ([link](http://snpeff.sourceforge.
 
     java -Xmx4g -jar snpEff.jar -v -stats <train.html> GRCh37.75 <trainCases.vcf> > <trainCases.ann.vcf>
     
+## Solving errors
+1. Fatal error: 'I' in VCF file:
+- 'I' stands for 'imprecise' minor allele. To fix this error, manually edit VCF file to transform 'I' into '.'
