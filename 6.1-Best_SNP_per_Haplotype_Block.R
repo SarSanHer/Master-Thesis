@@ -1,7 +1,8 @@
 ### SARA SANCHEZ-HEREDERO MARTINEZ
-### Script to find best SNP from the block considering:
+### Script to find best SNP from the haplotype block considering:
       # 1. Number of NA
       # 2. Effect estimated by SNPeff
+      # 3. Type of mutation (codon stop, TF, protein protein interaction...)
 
 # --------------------- Load data -----------------------------------------------------------------------------------------------
 
