@@ -48,6 +48,8 @@ rownames(info)<-info[,1]
 
 impact <- c()
 warning <- c()
+annotation <- c()
+
 
 for(i in snps){
   # {HIGH,MODERATE, LOW, MODIFIER}
@@ -62,21 +64,8 @@ for(i in snps){
   }
   impact <- c(impact, ef)
   
-  # if warning
-  w <- as.character(effect[i,16])
-  if(grepl("WARNING", w)){
-    warning <- c(warning, "yes")
-  }else{
-    warning <- c(warning, "no")
-  }
-}
-
-# Merge all in dataframe
-info <- cbind(info, impact, warning)
-
-
-annotation <- c()
-for(i in snps){
+  
+  # ANNOTATION
   if(as.character(effect[i,2])=="3_prime_UTR_variant"
      | as.character(effect[i,2])=="5_prime_UTR_premature_start_codon_gain_variant"
      | as.character(effect[i,2])=="5_prime_UTR_variant"
@@ -89,7 +78,7 @@ for(i in snps){
      | as.character(effect[i,2])=="stop_retained_variant"
      | as.character(effect[i,2])=="structural_interaction_variant"
      | as.character(effect[i,2])=="TF_binding_site_variant"
-     ){
+  ){
     an <- 2
   }else if(as.character(effect[i,2])=="downstream_gene_variant"
            | as.character(effect[i,2])=="intergenic_region"
@@ -107,13 +96,26 @@ for(i in snps){
            | as.character(effect[i,2])=="sequence_feature"
            | as.character(effect[i,2])=="synonymous_variant"
            | as.character(effect[i,2])=="upstream_gene_variant"
-           ){
-    an <- 1
-  }
-  annotation <- c(annotation, an)}
+  ){
+    an <- 1}
   
+  annotation <- c(annotation, an)
+  
+  # if warning
+  w <- as.character(effect[i,16])
+  if(grepl("WARNING", w)){
+    warning <- c(warning, "yes")
+  }else{
+    warning <- c(warning, "no")
+  }
+}
 
-# --------------------- Check blocks -----------------------------------------------------------------------------------------------
+# Merge all in dataframe
+info <- cbind(info, impact, warning,annotation)
+
+
+
+# --------------------- Select best SNP per block & write file -----------------------------------------------------------------------------------------------
 
 #set up writing
 logFile = "selectSNP.txt"
