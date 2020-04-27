@@ -35,5 +35,10 @@ The best SNP of each group is the one with the lowest number of NA records and h
     # Getting traw files to count NAs
     ./plink --bfile <sigSNPs> --recode A-transpose --out <tped_prefix>
     
- The selection of the best SNP of each block was performed using R code that can be found in file "6.1-BestSNP.R
+The selection of the best SNP of each block was performed using R code that can be found in file "6.1-BestSNP.R". The identifed SNPs were outputed to a txt file so to extract those SNPs from the PLINK files using PLINK:
+
+    # Extract SNPs from list using PLINK
+    ./plink --bfile <sigSNPs> --make-bed --allow-no-sex --extract <bestSNPs.txt> --out <bestSNPs>
+
+
     
