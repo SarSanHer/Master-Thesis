@@ -273,18 +273,7 @@ partialPlot(rf.mdl, data, Age, "0", xlab="Age", main="BMI")
 ###### IMPORTANCE ###
 options(max.print=1000000)  # print computation
 
-# A) GENERAL METHOD -> NO FUNCIONA
-imp <- importance(rf.mdl)
-plot(imp)
-
-impvar <- rownames(imp)[order(imp[, 2], decreasing=TRUE)]
-plot(margin(rf.mdl))
-
-varImp<-varImpPlot(rf.mdl,scale=TRUE)
-plot(varImp)
-
-
-# B) SNP METHOD
+# SNP METHOD
 X <- within(data, BMI <- NULL )
 X = data.frame(X) #generar dataframe para lo que quieres predecir y otra para lo demas
 Y = (data$BMI)
@@ -372,7 +361,7 @@ imp.rufen <- randomUniformForest::importance(rufen, Xtest = test, maxInteraction
 plot(imp.rufgi,  Xtest=train, nLocalFeatures = 30)
 plot(imp.rufgi, Xtest=train)
 
-write.table(imp.rufen[["globalVariableImportance"]], file='importance.csv', quote=FALSE, sep=";", col.names = T, row.names = T, dec = ',')
+#write.table(imp.rufen[["globalVariableImportance"]], file='importance.csv', quote=FALSE, sep=";", col.names = T, row.names = T, dec = ',')
 
 
 ### hacer importancia como RF 
@@ -383,81 +372,6 @@ partialDependenceBetweenPredictors(Xtest = X1,
                                    whichOrder = 'all',
                                    perspective = FALSE,
                                    outliersFilter = FALSE)
-
-# NO FUNCIONA
-partialDependenceBetweenPredictors(Xtest = X1, 
-                                   imp.rufen, c("rs76677607_1", "rs936939_1"),
-                                   whichOrder = 'all',
-                                   perspective = FALSE,
-                                   outliersFilter = FALSE)
-
-partialDependenceBetweenPredictors(Xtest = X1, imp.rufen, c("Var113", "Var68"),
-                                   whichOrder = "all",
-                                   perspective = FALSE,
-                                   outliersFilter = FALSE)
-
-
-partialDependenceOverResponses(Xtest = X1, imp.rufen,
-                               whichFeature = "rs72814718_1",
-                               whichOrder = "all")
-
-partialDependenceOverResponses(Xtest = X1, imp.rufen,
-                               whichFeature = "Var112",
-                               whichOrder = "all")
-
-partialDependenceOverResponses(Xtest = X1, imp.rufen,
-                               whichFeature = "Var68",
-                               whichOrder = "all")
-
-
-# NO FUNCIONA
-synth.Analysis.ruf = clusterAnalysis(object = imp.rufen, X= train, components = 3,
-                                     clusteredObject = rufen, OOB = TRUE)
-# NO FUNCIONA
-clusterAnalysis(object = imp.rufen, X = train, 
-                components = 2, 
-                maxFeatures = 2, 
-                clusteredObject = NULL, 
-                categorical = NULL,
-                OOB = FALSE)
-
-best<-Cs(Var95, Var84, Var17)
-
-
-###### RUN WITH BEST VARIABLES ONLY ###
-x.sel<-X[,best]
-x1.sel<-X1[,best]
-
-
-rufen <- randomUniformForest(X=x.sel,Y=Y,xtest=x1.sel,ytest=Y1,ntree=1000,maxVar=30,nodesize=1,depthcontrol=TRUE,BreimanBounds=TRUE,bagging=TRUE,featureselectionrule = "entropy") 
-plot(rufen)
-summary(rufen)
-
-rufgi <- randomUniformForest(X=x.sel,Y=Y,xtest=x1.sel,ytest=Y1,ntree=1000,maxVar=30,nodesize=1,depthcontrol=TRUE,BreimanBounds=TRUE,bagging=TRUE,featureselectionrule = "gini") 
-plot(rufgi)
-summary(rufgi)
-
-
-pr.rufen<-predict(rufen, X1)
-ms.rufen<-model.stats(pr.rufen, Y1, regression = T)
-
-
-
-OneTree <- getTree.randomUniformForest(rufen, 20)
-plotTree(OneTree)###parte de ejemplo de un arbol
-plotTree(OneTree, fullTree = TRUE, xlim = c(1,20), ylim = c(0, 20)) ####todo el arbol de ejemplo
-
-
-imp.rufen <- importance(rufen, Xtest = X1, maxInteractions = 3, maxVar=30)
-plot(imp.rufen, nLocalFeatures = 30)
-
-
-
-
-synth.Analysis.ruf = clusterAnalysis(synth.importance.rufen, X, components = 3,
-                                     clusteredObject = rufen, OOB = TRUE)
-
-
 
 
 # --------------------- GRADIENT BOOSTING -----------------------------------------------------------------------------------------------
@@ -529,7 +443,6 @@ gbm.perf(gbm.fit, method = "cv")
 par(mfrow=c(1), mar=c(2), oma=c(1))
 gbm.plot(gbm.sim,  write.title = TRUE)
 
-# NO FUNCIONA
 par(mfrow = c(1, 2))
 gbm.plot(gbm.sim, i.var = "Age", col = "firebrick",main="Age")
 plot(gbm.sim, i.var = "Age", col = "green",main="")
