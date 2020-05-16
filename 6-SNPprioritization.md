@@ -41,4 +41,12 @@ The selection of the best SNP of each block was performed using R code that can 
     ./plink --bfile <sigSNPs> --make-bed --allow-no-sex --extract <bestSNPs.txt> --out <bestSNPs>
 
 
+## 4.Supervised Learning
+Once a smaller set of significant SNPs had been identified, the selected SNPs were used as input for a supervised learning program that aimed to find which SNPs had a higher relevance in the prediction of BMI and, therefore, would be more relevant in a diagnostic experiment. The algorithms used were:  
+* Random Forest: because it runs efficiently on large databases with high number of attributes and does not have overfitting issues. It also provides a p-value for the accuracy of the results.  
+* Random Unified Forest: to validate results.  
+* Gradient Boosting: also to validate results, it can have overfitting issues.  
+
+In order to see the code used for this analysis please refer to file 6.2-SNPprioritization.R. 
+
     
