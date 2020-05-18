@@ -41,14 +41,17 @@ val = read.csv('distribution/train-val/IDs_val.txt', header = F)
 
 
 # --------------------- BMI distribution -----------------------------------------------------------------------------------------------
-BMI <-as.numeric(data[,11])
-BMI <- data[,11]
-BMI <- BMI[1:1011]
-a<-as.numeric(as.character(BMI))
 
+### BMI
+bmi <-as.numeric(data[,11])
+test <- lillie.test(bmi)
+fit.cont(bmi)
+
+### Age
 age <-as.numeric(data[,13])
 test <- lillie.test(age)
 fit.cont(age)
+
 
 
 
@@ -100,9 +103,6 @@ mydata$Age <- as.numeric(mydata$Age)
 # Data overview
 summary(mydata) ### Now it has 849 observations from the original 1011
 glimpse(mydata)
-
-# Check distribution of age data
-fit.cont(mydata$Age) # normally distributed
 
 
 ### Correlation
