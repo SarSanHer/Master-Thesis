@@ -52,7 +52,7 @@ It creates a list of the heterozygous haploid genotypes found in our samples. Th
      
    
 ### 3. Missing data
-The experimental genotyping of samples has an error rate of 0.1% to 0.6% [reference](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4216915/), so in order to get an idea of the percentage of our data inputs that are not correctly genotyped, we count the missing data in the files as:
+The experimental genotyping of samples has an error rate of 0.1% to 0.6% [[reference](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4216915/)], so in order to get an idea of the percentage of our data inputs that are not correctly genotyped, we count the missing data in the files as:
 
           grep -v "^#" <filteredCases.vcf> | cut -f 10- | tr "\t" "\n" | cut -d ':' -f 1 | awk '/^\.\/\./ {NC++;} END{printf("%f\n",NC/(1.0*NR))}'
           
