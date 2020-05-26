@@ -49,3 +49,7 @@ It creates a list of the heterozygous haploid genotypes found in our samples. Th
 
      awk '{ total += $6 } END { print total/NR }' ctrl.het
      awk '{ total += $6 } END { print total/NR }' case.het
+     
+   
+### 3. Missing data
+The experimental genotyping of samples has an error rate of 0.1% to 0.6% [reference](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4216915/), 
