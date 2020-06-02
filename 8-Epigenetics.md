@@ -5,4 +5,4 @@ This file contains the details on the epigenetics analysis in the project. The r
     git clone https://github.com/YuanTian1991/ChAMP.git
     R CMD INSTALL ChAMP
     
-The analyses run using this tool can be found in the R script "epigenetics.R" in this repository.
+More information on the tool ChAMP can be found in this [publication](https://academic.oup.com/bioinformatics/article/33/24/3982/4082274). The analyses run using this tool can be found in the R script "epigenetics.R" in this repository. 
