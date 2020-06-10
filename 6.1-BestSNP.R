@@ -6,21 +6,21 @@
 
 # --------------------- Load data -----------------------------------------------------------------------------------------------
 
-blocks <- read.table("/Volumes/SSD/Prioritization/files/blocks/blocks.blocks.det", head = T)
+blocks <- read.table("selectedSNPs.blocks.det", head = T)
 b <- data.frame(do.call('rbind', strsplit(as.character(blocks[,6]),'|',fixed=TRUE)))
 
 
-snps <- scan('/Volumes/SSD/Prioritization/significantSNPs.txt',what="", sep="\n")
+snps <- scan('significantSNPs.txt',what="", sep="\n")
 
 # Genotype data is the traw transformation in PLINK (shows NAs)
-gen <- read.table("/Volumes/SSD/Prioritization/files/extractedSNPs/signifSNP2.traw", sep = "\t", header = T)
+gen <- read.table("signifSNP2.traw", sep = "\t", header = T)
 gen <- cbind(gen[,2],gen[,7:length(gen[1,])]) # keep only relevant columns
 g <- gen[,2:length(gen[1,])]
 rownames(g) <- gen[,1] # assign rownames as snp names
 
 
 # SNPeff results
-eff <- read.table("/Volumes/SSD/SNPeff/preimpCases.annMOD.vcf", sep = "\t", header = F)
+eff <- read.table("cases.annMOD.vcf", sep = "\t", header = F)
 #row.names(eff) <- eff[,3] # assign rownames as snp names
 #eff <- eff[,1:9] # keep only info (not genotype)
 e <- data.frame(do.call('rbind', strsplit(as.character(eff[,8]),'|',fixed=TRUE)))
