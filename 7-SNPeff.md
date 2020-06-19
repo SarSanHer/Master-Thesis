@@ -13,6 +13,9 @@ The program can be installed from its website ([link](http://snpeff.sourceforge.
 
     # Install
     unzip snpEff_latest_core.zip 
+    
+## Prepare files
+    ./plink --bfile <filename> --recode vcf --allow-no-sex --out <filename-vcf>
 
 ## Running program
 
