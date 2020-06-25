@@ -71,3 +71,21 @@ myG_tAPIT <- GAPIT(
 # FarmCPU: solve the problem of false positive control and confounding between testing markers and cofactors
           #simultaneously. It has higher statistical power than MLMM.
 
+
+# --------------------- Export results -----------------------------------------------------------------------------------------------
+
+# Import data
+FarmCPU_r <- read.table('GAPIT.FarmCPU.BMI.GWAS.Results.csv', sep = ',', header = T)
+FarmCPU_err <- read.table('GAPIT.FarmCPU.BMI.Df.tValue.StdErr.csv', sep = ',', header = T)
+
+
+# Extract significant SNPs
+mySNPs <- FarmCPU_r[(FarmCPU_r$P.value<0.01),]$SNP
+myResults <- FarmCPU_r[(FarmCPU_r$P.value<0.01),]
+
+# Write snps to text file to extract using PLINK
+write.table(mySNPs, file='significantSNPs.txt', quote=FALSE, sep="\n", col.names = F, row.names = FALSE) # list of SNP IDs
+write.table(myResults, file='/GWAS_results.csv', quote=FALSE, sep=";", col.names = T, row.names = FALSE, dec = ',') # table with values
+
+
+
