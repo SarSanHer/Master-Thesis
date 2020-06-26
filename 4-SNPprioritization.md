@@ -47,6 +47,6 @@ Once a smaller set of significant SNPs had been identified, the selected SNPs we
 * Random Uniform Forest: to validate results.  
 * Gradient Boosting: also to validate results, it can have overfitting issues.  
 
-In order to see the code used for this analysis please refer to file 6.2-SNPprioritization.R. 
+In order to see the code used for this analysis please refer to file ```4.2-SNPprioritization.R```. 
 
     
