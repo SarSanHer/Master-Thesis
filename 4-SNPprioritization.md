@@ -35,7 +35,7 @@ The best SNP of each group is the one with the lowest number of NA records and h
     # Getting traw files to count NAs
     ./plink --bfile <sigSNPs> --recode A-transpose --out <tped_prefix>
     
-The selection of the best SNP of each block was performed using R code that can be found in file "6.1-BestSNP.R". The identifed SNPs were outputed to a txt file so to extract those SNPs from the PLINK files using PLINK:
+The selection of the best SNP of each block was performed using R code that can be found in file ```4.1-BestSNP.R```. The identifed SNPs were outputed to a txt file so to extract those SNPs from the PLINK files using PLINK:
 
     # Extract SNPs from list using PLINK
     ./plink --bfile <sigSNPs> --make-bed --allow-no-sex --extract <bestSNPs.txt> --out <bestSNPs>
@@ -47,6 +47,6 @@ Once a smaller set of significant SNPs had been identified, the selected SNPs we
 * Random Uniform Forest: to validate results.  
 * Gradient Boosting: also to validate results, it can have overfitting issues.  
 
-In order to see the code used for this analysis please refer to file ```4.2-SNPprioritization.R```. 
+In order to see the code used for this analysis please refer to file ```4.2-MachineLearning.R```. 
 
     
