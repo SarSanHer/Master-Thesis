@@ -220,15 +220,4 @@ DMP.GUI(DMP=nsubset_0001,beta=norm_n,pheno=P$BMI, cutgroupnumber = 3)
 #write.table(nsubset_0001, file='/Volumes/SSD/Epigenetics/output/BMI/filtered.csv', quote=FALSE, sep=";", dec = ',', col.names = T, row.names = T)
 
 
-## Differential methylation per blocks
-myBlock <- champ.Block(beta=norm_n,
-                       pheno=P$sexo,
-                       arraytype="450K")
-
-## Differential methylation per probes
-
-myGSEA <- champ.GSEA(beta=norm_n,DMP=myDMP_n[[1]], DMR=myDMP_n, arraytype="450K",adjPval=0.05, method="fisher")
-head(myGSEA$DMP)
-myEpiMod <- champ.EpiMod(beta=norm_n,pheno=P$BMI)
-
 
