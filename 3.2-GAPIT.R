@@ -1,5 +1,5 @@
 ### SARA SANCHEZ-HEREDERO MARTINEZ
-### Script to execute GAPIT software (https://www.maizegenetics.net/gapit)
+### Script to execute GAPIT software (https://www.maizegenetics.net/gapit) for the GWAS analysis
 
 # --------------------- Load packages -----------------------------------------------------------------------------------------------
 
